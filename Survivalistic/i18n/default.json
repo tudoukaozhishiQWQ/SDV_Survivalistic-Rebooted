@@ -18,8 +18,8 @@
   "buff.hydrated.source": "Drunk drink",
 
   // Info messages.
-  "info-fullness": "+{0} fullness.",
-  "info-thirsty": "+{0} thirst.",
+  "info-fullness": "+{0} Fullness.",
+  "info-thirsty": "+{0} Thirst.",
 
   // Settings.
   "multiplier-settings": "Multiplier Settings",

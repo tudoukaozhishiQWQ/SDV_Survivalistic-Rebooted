@@ -5,55 +5,80 @@ using Survivalistic.Framework.Networking;
 
 namespace Survivalistic.Framework.Common.Affection
 {
-    public class Penalty
+    public static class Penalty
     {
-        private static bool alreadyCheckedFaint;
+        private static bool _alreadyCheckedFaint;
 
         public static void VerifyPenalty()
         {
             if (!Context.IsWorldReady) return;
 
-            if (ModEntry.data.actual_hunger <= 15 || ModEntry.data.actual_hunger > 0) BarsDatabase.tool_use_multiplier = 1.5f;
-            else if (ModEntry.data.actual_hunger <= 0) BarsDatabase.tool_use_multiplier = 2.5f;
-            else BarsDatabase.tool_use_multiplier = 1;
+            if (ModEntry.Data.ActualHunger <= 15 && ModEntry.Data.ActualHunger > 0) BarsDatabase.ToolUseMultiplier = 1.5f;
+            else if (ModEntry.Data.ActualHunger <= 0) BarsDatabase.ToolUseMultiplier = 2.5f;
+            else BarsDatabase.ToolUseMultiplier = 1;
 
-            if (ModEntry.data.actual_thirst <= 15 || ModEntry.data.actual_thirst > 0) BarsDatabase.tool_use_multiplier = 1.5f;
-            else if (ModEntry.data.actual_thirst <= 0) BarsDatabase.tool_use_multiplier = 2.5f;
-            else BarsDatabase.tool_use_multiplier = 1;
+            if (ModEntry.Data.ActualThirst <= 15 && ModEntry.Data.ActualThirst > 0) BarsDatabase.ToolUseMultiplier = 1.5f;
+            else if (ModEntry.Data.ActualThirst <= 0) BarsDatabase.ToolUseMultiplier = 2.5f;
+            else BarsDatabase.ToolUseMultiplier = 1;
 
-            CheckValuesAndIfReadyDealDamage();
+            CheckValuesAndDealDamageIfReady();
         }
 
-        public static void CheckValuesAndIfReadyDealDamage()
+        public static void CheckValuesAndDealDamageIfReady()
         {
             if (!Context.IsWorldReady) return;
-            bool _applying_health_damage = false;
+            bool applyingHealthDamage = false;
 
-            if (ModEntry.data.actual_hunger <= 0)
+            if (ModEntry.Data.ActualHunger <= 10)
             {
-                if (Game1.player.stamina > 0) Game1.player.stamina -= 15;
+                if (Game1.player.stamina > 0)
+                {
+                    Game1.player.stamina -= 15;
+                }
                 else
                 {
                     Game1.player.health -= 10;
-                    _applying_health_damage = true;
+                    applyingHealthDamage = true;
                 }
-                Buffs.SetBuff("Hunger");
+
+                Buffs.CallUpdateSettingBuff(Buffs.HungerBuffName);
             }
-            if (ModEntry.data.actual_thirst <= 0)
+            else
             {
-                if (Game1.player.stamina > 0) Game1.player.stamina -= 15;
-                else
-                {
-                    Game1.player.health -= 10;
-                    _applying_health_damage = true;
-                }
-                Buffs.SetBuff("Thirsty");
+                Buffs.CallUpdateSettingBuff(Buffs.HungerBuffName, true);
             }
 
-            if (_applying_health_damage)
+            if (ModEntry.Data.ActualThirst <= 10)
+            {
+                if (ModEntry.Data.ActualThirst <= 0)
+                {
+                    if (Game1.player.stamina > 0)
+                    {
+                        Game1.player.stamina -= 15;
+                    }
+                    else
+                    {
+                        Game1.player.health -= 10;
+                        applyingHealthDamage = true;
+                    }
+                }
+
+                Buffs.CallUpdateSettingBuff(Buffs.ThirstyBuffName);
+            }
+            else
+            {
+                Buffs.CallUpdateSettingBuff(Buffs.ThirstyBuffName, true);
+            }
+
+
+            if (applyingHealthDamage)
             {
                 Game1.player.checkForExhaustion(Game1.player.Stamina);
-                Buffs.SetBuff("Fainting");
+                Buffs.CallUpdateSettingBuff(Buffs.FaintingBuffName);
+            }
+            else
+            {
+                Buffs.CallUpdateSettingBuff(Buffs.FaintingBuffName, true);
             }
         }
 
@@ -61,17 +86,17 @@ namespace Survivalistic.Framework.Common.Affection
         {
             if (Game1.player.health <= 0)
             {
-                if (!alreadyCheckedFaint)
+                if (!_alreadyCheckedFaint)
                 {
-                    ModEntry.data.actual_hunger = ModEntry.data.max_hunger / 3;
-                    ModEntry.data.actual_thirst = ModEntry.data.max_thirst / 2;
+                    ModEntry.Data.ActualHunger = ModEntry.Data.MaxHunger / 3;
+                    ModEntry.Data.ActualThirst = ModEntry.Data.MaxThirst / 2;
 
                     NetController.Sync();
 
-                    alreadyCheckedFaint = true;
+                    _alreadyCheckedFaint = true;
                 }
             }
-            else alreadyCheckedFaint = false;
+            else _alreadyCheckedFaint = false;
         }
     }
 }

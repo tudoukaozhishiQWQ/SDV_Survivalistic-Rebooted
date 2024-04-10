@@ -5,12 +5,12 @@ using Survivalistic.Framework.Networking;
 
 namespace Survivalistic.Framework.Common
 {
-    public class Commands
+    public static class Commands
     {
-        private static string _error_permission = "You aren't the host!";
-        private static string _error_player_not_found = "Player not found!";
-        private static string _error_command_wrong = "Command missing arguments!\nPlease check the command usage with:";
-        private static string _error_multiplayer = "That command only works on multiplayer!";
+        private static string _errorPermission = "You aren't the host!";
+        private static string _errorPlayerIsNotFound = "Player not found!";
+        private static string _errorCommandIsWrong = "Command missing arguments!\nPlease check the command usage with:";
+        private static string _errorMultiplayer = "That command only works on multiplayer!";
 
         public static void Feed(string command, string[] args)
         {
@@ -21,36 +21,39 @@ namespace Survivalistic.Framework.Common
                 {
                     if (args.Length > 0)
                     {
-                        bool _player_check = false;
-                        foreach (Farmer _farmer in Game1.getAllFarmers())
+                        bool isPlayerChecked = false;
+                        foreach (Farmer farmer in Game1.getAllFarmers())
                         {
-                            if (_farmer.displayName == args[0])
+                            if (farmer.displayName == args[1])
                             {
-                                Data _data = ModEntry.instance.Helper.Data.ReadSaveData<Data>($"{_farmer.UniqueMultiplayerID}");
-                                _data.actual_hunger = _data.max_hunger;
-                                ModEntry.instance.Helper.Data.WriteSaveData($"{_farmer.UniqueMultiplayerID}", _data);
+                                Data data = ModEntry.Instance.Helper.Data.ReadSaveData<Data>($"{farmer.UniqueMultiplayerID}");
+                                data.ActualHunger = data.MaxHunger;
+                                ModEntry.Instance.Helper.Data.WriteSaveData($"{farmer.UniqueMultiplayerID}", data);
 
                                 if (Context.IsMainPlayer)
                                 {
-                                    ModEntry.data.actual_hunger = _data.actual_hunger;
+                                    ModEntry.Data.ActualHunger = data.ActualHunger;
                                     BarsUpdate.CalculatePercentage();
                                 }
-                                else NetController.SyncSpecificPlayer(_farmer.UniqueMultiplayerID);
+                                else
+                                {
+                                    NetController.SyncSpecificPlayer(farmer.UniqueMultiplayerID);
+                                }
 
-                                Debugger.Log($"Feeding player {_farmer.displayName}.", "Info");
-                                _player_check = true;
+                                Debugger.Log($"Feeding player {farmer.displayName}.", "Info");
+                                isPlayerChecked = true;
                                 break;
                             }
                         }
-                        if (!_player_check) Debugger.Log(_error_player_not_found, "Error");
+                        if (!isPlayerChecked) Debugger.Log(_errorPlayerIsNotFound, "Error");
                     }
-                    else Debugger.Log($"{_error_command_wrong} 'help {command}'", "Error");
+                    else Debugger.Log($"{_errorCommandIsWrong} 'help {command}'", "Error");
                 }
-                else Debugger.Log(_error_permission, "Error");
+                else Debugger.Log(_errorPermission, "Error");
             }
             else
             {
-                ModEntry.data.actual_hunger = ModEntry.data.max_hunger;
+                ModEntry.Data.ActualHunger += int.TryParse(args[0], out int fullnessValue) ? fullnessValue : 0;
                 Debugger.Log("Feeding the player.", "Info");
             }
         }
@@ -64,36 +67,39 @@ namespace Survivalistic.Framework.Common
                 {
                     if (args.Length > 0)
                     {
-                        bool _player_check = false;
-                        foreach (Farmer _farmer in Game1.getAllFarmers())
+                        bool isPlayerChecked = false;
+                        foreach (Farmer farmer in Game1.getAllFarmers())
                         {
-                            if (_farmer.displayName == args[0])
+                            if (farmer.displayName == args[1])
                             {
-                                Data _data = ModEntry.instance.Helper.Data.ReadSaveData<Data>($"{_farmer.UniqueMultiplayerID}");
-                                _data.actual_thirst = _data.max_thirst;
-                                ModEntry.instance.Helper.Data.WriteSaveData($"{_farmer.UniqueMultiplayerID}", _data);
+                                Data _data = ModEntry.Instance.Helper.Data.ReadSaveData<Data>($"{farmer.UniqueMultiplayerID}");
+                                _data.ActualThirst = _data.MaxThirst;
+                                ModEntry.Instance.Helper.Data.WriteSaveData($"{farmer.UniqueMultiplayerID}", _data);
 
                                 if (Context.IsMainPlayer)
                                 {
-                                    ModEntry.data.actual_thirst = _data.actual_thirst;
+                                    ModEntry.Data.ActualThirst = _data.ActualThirst;
                                     BarsUpdate.CalculatePercentage();
                                 }
-                                else NetController.SyncSpecificPlayer(_farmer.UniqueMultiplayerID);
+                                else
+                                {
+                                    NetController.SyncSpecificPlayer(farmer.UniqueMultiplayerID);
+                                }
 
-                                Debugger.Log($"Hydrating player {_farmer.displayName}.", "Info");
-                                _player_check = true;
+                                Debugger.Log($"Hydrating player {farmer.displayName}.", "Info");
+                                isPlayerChecked = true;
                                 break;
                             }
                         }
-                        if (!_player_check) Debugger.Log(_error_player_not_found, "Error");
+                        if (!isPlayerChecked) Debugger.Log(_errorPlayerIsNotFound, "Error");
                     }
-                    else Debugger.Log($"{_error_command_wrong} 'help {command}'", "Error");
+                    else Debugger.Log($"{_errorCommandIsWrong} 'help {command}'", "Error");
                 }
-                else Debugger.Log(_error_permission, "Error");
+                else Debugger.Log(_errorPermission, "Error");
             }
             else
             {
-                ModEntry.data.actual_thirst = ModEntry.data.max_thirst;
+                ModEntry.Data.ActualThirst += int.TryParse(args[0], out int hydrationValue) ? hydrationValue : 0;
                 Debugger.Log("Hydrating the player.", "Info");
             }
         }
@@ -107,39 +113,48 @@ namespace Survivalistic.Framework.Common
                 {
                     if (args.Length > 0)
                     {
-                        bool _player_check = false;
-                        foreach (Farmer _farmer in Game1.getAllFarmers())
+                        bool isPlayerChecked = false;
+                        foreach (Farmer farmer in Game1.getAllFarmers())
                         {
-                            if (_farmer.displayName == args[0])
+                            if (farmer.displayName == args[0])
                             {
-                                Data _data = ModEntry.instance.Helper.Data.ReadSaveData<Data>($"{_farmer.UniqueMultiplayerID}");
-                                _data.actual_hunger = _data.max_hunger;
-                                _data.actual_thirst = _data.max_thirst;
-                                ModEntry.instance.Helper.Data.WriteSaveData($"{_farmer.UniqueMultiplayerID}", _data);
+                                Data data = ModEntry.Instance.Helper.Data.ReadSaveData<Data>($"{farmer.UniqueMultiplayerID}");
+                                data.ActualHunger = data.MaxHunger;
+                                data.ActualThirst = data.MaxThirst;
+                                ModEntry.Instance.Helper.Data.WriteSaveData($"{farmer.UniqueMultiplayerID}", data);
 
                                 if (Context.IsMainPlayer)
                                 {
-                                    ModEntry.data.actual_hunger = _data.max_hunger;
-                                    ModEntry.data.actual_thirst = _data.actual_thirst;
+                                    ModEntry.Data.ActualHunger = data.MaxHunger;
+                                    ModEntry.Data.ActualThirst = data.ActualThirst;
                                     BarsUpdate.CalculatePercentage();
                                 }
-                                else NetController.SyncSpecificPlayer(_farmer.UniqueMultiplayerID);
+                                else
+                                {
+                                    NetController.SyncSpecificPlayer(farmer.UniqueMultiplayerID);
+                                }
 
-                                Debugger.Log($"Setting full status to the player {_farmer.displayName}.", "Info");
-                                _player_check = true;
+                                Debugger.Log($"Setting full status to the player {farmer.displayName}.", "Info");
+                                isPlayerChecked = true;
                                 break;
                             }
                         }
-                        if (!_player_check) Debugger.Log(_error_player_not_found, "Error");
+                        if (!isPlayerChecked) Debugger.Log(_errorPlayerIsNotFound, "Error");
                     }
-                    else Debugger.Log($"{_error_command_wrong} 'help {command}'", "Error");
+                    else
+                    {
+                        Debugger.Log($"{_errorCommandIsWrong} 'help {command}'", "Error");
+                    }
                 }
-                else Debugger.Log(_error_permission, "Error");
+                else
+                {
+                    Debugger.Log(_errorPermission, "Error");
+                }
             }
             else
             {
-                ModEntry.data.actual_hunger = ModEntry.data.max_hunger;
-                ModEntry.data.actual_thirst = ModEntry.data.max_thirst;
+                ModEntry.Data.ActualHunger = ModEntry.Data.MaxHunger;
+                ModEntry.Data.ActualThirst = ModEntry.Data.MaxThirst;
                 Debugger.Log("Setting full status to the player.", "info");
             }
         }
@@ -155,9 +170,9 @@ namespace Survivalistic.Framework.Common
                     NetController.Sync();
                     Debugger.Log($"All players are now synchronized!", "Info");
                 }
-                else Debugger.Log(_error_permission, "Error");
+                else Debugger.Log(_errorPermission, "Error");
             }
-            else Debugger.Log(_error_multiplayer, "Info");
+            else Debugger.Log(_errorMultiplayer, "Info");
         }
     }
 }

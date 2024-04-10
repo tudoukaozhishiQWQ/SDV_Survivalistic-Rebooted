@@ -2,8 +2,8 @@
 
 namespace Survivalistic.Framework.Databases
 {
-    public class Foods
+    public static class Foods
     {
-		public static Dictionary<string, string> foodDatabase = new Dictionary<string, string>();
+        public static Dictionary<string, string> FoodDatabase = new();
 	}
 }

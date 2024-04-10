@@ -9,16 +9,17 @@ using Survivalistic.Framework.Databases;
 
 namespace Survivalistic.Framework.Common
 {
-    public class Interaction
+    public static class Interaction
     {
-        private static bool already_eating = false;
-        private static bool already_using_tool = false;
+        private static bool AlreadyEating;
 
-        private static string item_eaten_name;
+        private static bool AlreadyUsingTool;
 
-        private static string tool_used_name;
+        private static string ItemEatenName;
 
-        private static bool getting_tick_information = true;
+        private static string ToolUsedName;
+
+        private static bool GettingTickInformation = true;
 
         public static void EatingCheck()
         {
@@ -26,16 +27,15 @@ namespace Survivalistic.Framework.Common
 
             if (Game1.player.isEating)
             {
-                item_eaten_name = Game1.player.itemToEat.Name;
-
-                already_eating = true;
+                ItemEatenName = Game1.player.itemToEat.Name;
+                AlreadyEating = true;
             }
             else
             {
-                if (already_eating)
+                if (AlreadyEating)
                 {
-                    already_eating = false;
-                    IncreaseStatus(item_eaten_name, Game1.player.itemToEat.staminaRecoveredOnConsumption());
+                    AlreadyEating = false;
+                    IncreaseStatus(ItemEatenName, Game1.player.itemToEat.staminaRecoveredOnConsumption());
                 }
             }
         }
@@ -46,66 +46,69 @@ namespace Survivalistic.Framework.Common
 
             if (Game1.player.UsingTool)
             {
-                tool_used_name = Game1.player.CurrentTool.BaseName;
-                already_using_tool = true;
+                ToolUsedName = Game1.player.CurrentTool.BaseName;
+                AlreadyUsingTool = true;
             }
             else
             {
-                if (already_using_tool)
+                if (AlreadyUsingTool)
                 {
-                    already_using_tool = false;
-                    DecreaseStatus(tool_used_name);
+                    AlreadyUsingTool = false;
+                    DecreaseStatus(ToolUsedName);
                 }
             }
         }
 
-        private static void IncreaseStatus(string food_eated, int recover)
+        private static void IncreaseStatus(string foodEaten, int recover)
         {
-            float last_hunger = ModEntry.data.actual_hunger;
-            float last_thirst = ModEntry.data.actual_thirst;
+            float lastHunger = ModEntry.Data.ActualHunger;
+            float lastThirst = ModEntry.Data.ActualThirst;
 
-            if (Foods.foodDatabase.TryGetValue(food_eated, out string food_status_string))
+            if (Foods.FoodDatabase.TryGetValue(foodEaten, out string food_status_string))
             {
                 List<string> food_status = food_status_string.Split('/').ToList();
 
-                if (ModEntry.data.actual_hunger < ModEntry.data.max_hunger) ModEntry.data.actual_hunger += Int32.Parse(food_status[0]);
-                if (ModEntry.data.actual_thirst < ModEntry.data.max_thirst) ModEntry.data.actual_thirst += Int32.Parse(food_status[1]);
+                if (ModEntry.Data.ActualHunger < ModEntry.Data.MaxHunger) ModEntry.Data.ActualHunger += Int32.Parse(food_status[0]);
+                if (ModEntry.Data.ActualThirst < ModEntry.Data.MaxThirst) ModEntry.Data.ActualThirst += Int32.Parse(food_status[1]);
 
                 BarsInformations.NormalizeStatus();
 
-                float hunger_diff = ModEntry.data.actual_hunger - last_hunger;
-                float thirst_diff = ModEntry.data.actual_thirst - last_thirst;
+                float hungerDiff = ModEntry.Data.ActualHunger - lastHunger;
+                float thirstDiff = ModEntry.Data.ActualThirst - lastThirst;
 
-                if (hunger_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.instance.Helper.Translation.Get("info-fullness"), (int)hunger_diff), 4));
-                if (thirst_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.instance.Helper.Translation.Get("info-thirsty"), (int)thirst_diff), 4));
+                if (hungerDiff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-fullness"), (int)hungerDiff), 4));
+                if (thirstDiff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-thirsty"), (int)thirstDiff), 4));
             }
 
-            else if (ModEntry.config.non_supported_food)
+            else if (ModEntry.Config.NonSupportedFood)
             {
-                if (ModEntry.data.actual_hunger < ModEntry.data.max_hunger) ModEntry.data.actual_hunger += recover * new Random().Next(1, 3);
-                if (ModEntry.data.actual_thirst < ModEntry.data.max_thirst) ModEntry.data.actual_thirst += recover * new Random().Next(1, 3);
+                if (ModEntry.Data.ActualHunger < ModEntry.Data.MaxHunger) ModEntry.Data.ActualHunger += recover * new Random().Next(1, 3);
+                if (ModEntry.Data.ActualThirst < ModEntry.Data.MaxThirst) ModEntry.Data.ActualThirst += recover * new Random().Next(1, 3);
 
                 BarsInformations.NormalizeStatus();
 
-                float hunger_diff = ModEntry.data.actual_hunger - last_hunger;
-                float thirst_diff = ModEntry.data.actual_thirst - last_thirst;
+                float hunger_diff = ModEntry.Data.ActualHunger - lastHunger;
+                float thirst_diff = ModEntry.Data.ActualThirst - lastThirst;
 
-                if (hunger_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.instance.Helper.Translation.Get("info-fullness"), (int)hunger_diff), 4));
-                if (thirst_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.instance.Helper.Translation.Get("info-thirsty"), (int)thirst_diff), 4));
+                if (hunger_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-fullness"), (int)hunger_diff), 4));
+                if (thirst_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-thirsty"), (int)thirst_diff), 4));
             }
+
+            if (!Benefits.VerifyBenefits())
+                Penalty.VerifyPenalty();
         }
 
         private static void DecreaseStatus(string tool_used)
         {
-            if (Tools.GetToolDatabase().TryGetValue(tool_used, out string tool_status_string))
+            if (Tools.GetToolDatabase().TryGetValue(tool_used, out string toolStatusString))
             {
-                List<string> tool_status = tool_status_string.Split('/').ToList();
+                List<string> toolStatus = toolStatusString.Split('/').ToList();
 
-                if (ModEntry.data.actual_hunger >= 0) 
-                    ModEntry.data.actual_hunger -= float.Parse(tool_status[0]) * (BarsDatabase.tool_use_multiplier * ModEntry.config.hunger_action_multiplier);
+                if (ModEntry.Data.ActualHunger >= 0) 
+                    ModEntry.Data.ActualHunger -= float.Parse(toolStatus[0]) * (BarsDatabase.ToolUseMultiplier * ModEntry.Config.HungerActionMultiplier);
 
-                if (ModEntry.data.actual_thirst >= 0) 
-                    ModEntry.data.actual_thirst -= float.Parse(tool_status[1]) * (BarsDatabase.tool_use_multiplier * ModEntry.config.thirst_action_multiplier);
+                if (ModEntry.Data.ActualThirst >= 0) 
+                    ModEntry.Data.ActualThirst -= float.Parse(toolStatus[1]) * (BarsDatabase.ToolUseMultiplier * ModEntry.Config.ThirstActionMultiplier);
 
                 if (!Benefits.VerifyBenefits())
                     Penalty.VerifyPenalty();
@@ -117,39 +120,39 @@ namespace Survivalistic.Framework.Common
 
         public static void Awake()
         {
-            ModEntry.data.initial_hunger = ModEntry.data.actual_hunger;
-            ModEntry.data.initial_thirst = ModEntry.data.actual_thirst;
-            ModEntry.data.actual_day = Game1.Date.DayOfMonth;
-            ModEntry.data.actual_season = Game1.Date.SeasonIndex;
-            ModEntry.data.actual_year = Game1.Date.Year;
+            ModEntry.Data.InitialHunger = ModEntry.Data.ActualHunger;
+            ModEntry.Data.InitialThirst = ModEntry.Data.ActualThirst;
+            ModEntry.Data.ActualDay = Game1.Date.DayOfMonth;
+            ModEntry.Data.ActualSeason = Game1.Date.SeasonIndex;
+            ModEntry.Data.ActualYear = Game1.Date.Year;
         }
 
-        public static void ReceiveAwakeInfos()
+        public static void ReceiveAwakeInfo()
         {
             if (Game1.IsMultiplayer)
             {
-                if (ModEntry.data.actual_day != Game1.Date.DayOfMonth ||
-                        ModEntry.data.actual_season != Game1.Date.SeasonIndex ||
-                        ModEntry.data.actual_year != Game1.Date.Year ||
-                        ModEntry.data.actual_tick < Game1.ticks)
+                if (ModEntry.Data.ActualDay != Game1.Date.DayOfMonth ||
+                        ModEntry.Data.ActualSeason != Game1.Date.SeasonIndex ||
+                        ModEntry.Data.ActualYear != Game1.Date.Year ||
+                        ModEntry.Data.ActualTick < Game1.ticks)
                 {
-                    ModEntry.data.actual_hunger = ModEntry.data.initial_hunger;
-                    ModEntry.data.actual_thirst = ModEntry.data.initial_thirst;
+                    ModEntry.Data.ActualHunger = ModEntry.Data.InitialHunger;
+                    ModEntry.Data.ActualThirst = ModEntry.Data.InitialThirst;
                 }
             }
             else
             {
-                ModEntry.data.actual_hunger = ModEntry.data.initial_hunger;
-                ModEntry.data.actual_thirst = ModEntry.data.initial_thirst;
+                ModEntry.Data.ActualHunger = ModEntry.Data.InitialHunger;
+                ModEntry.Data.ActualThirst = ModEntry.Data.InitialThirst;
             }
-            getting_tick_information = false;
+            GettingTickInformation = false;
         }
 
         public static void UpdateTickInformation()
         {
-            if (!getting_tick_information)
+            if (!GettingTickInformation)
             {
-                ModEntry.data.actual_tick = Game1.ticks;
+                ModEntry.Data.ActualTick = Game1.ticks;
             }
         }
     }

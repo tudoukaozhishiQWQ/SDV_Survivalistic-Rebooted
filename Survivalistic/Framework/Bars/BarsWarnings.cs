@@ -3,34 +3,34 @@ using StardewValley;
 
 namespace Survivalistic.Framework.Bars
 {
-    public class BarsWarnings
+    public static class BarsWarnings
     {
-        private static bool active_hunger_warning = false;
-        private static bool active_thirst_warning = false;
+        private static bool isHungerWarningActive;
+        private static bool isThirstWarningActive;
 
         public static void VerifyStatus()
         {
             if (!Context.IsWorldReady) return;
 
-            if (ModEntry.data.actual_hunger <= 15)
+            if (ModEntry.Data.ActualHunger <= 15)
             {
-                if (!active_hunger_warning)
+                if (!isHungerWarningActive)
                 {
-                    active_hunger_warning = true;
-                    Game1.addHUDMessage(new HUDMessage(ModEntry.instance.Helper.Translation.Get("hunger-warning"), 2));
+                    isHungerWarningActive = true;
+                    Game1.addHUDMessage(new HUDMessage(ModEntry.Instance.Helper.Translation.Get("hunger-warning"), 2));
                 }
             }
-            else active_hunger_warning = false;
+            else isHungerWarningActive = false;
 
-            if (ModEntry.data.actual_thirst <= 15)
+            if (ModEntry.Data.ActualThirst <= 15)
             {
-                if (!active_thirst_warning)
+                if (!isThirstWarningActive)
                 {
-                    active_thirst_warning = true;
-                    Game1.addHUDMessage(new HUDMessage(ModEntry.instance.Helper.Translation.Get("thirsty-warning"), 2));
+                    isThirstWarningActive = true;
+                    Game1.addHUDMessage(new HUDMessage(ModEntry.Instance.Helper.Translation.Get("thirsty-warning"), 2));
                 }
             }
-            else active_thirst_warning = false;
+            else isThirstWarningActive = false;
         }
     }
 }

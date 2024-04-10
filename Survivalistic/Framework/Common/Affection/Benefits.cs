@@ -7,28 +7,44 @@ namespace Survivalistic.Framework.Common.Affection
         public static bool VerifyBenefits()
         {
             if (!Context.IsWorldReady)
-            {
                 return false;
-            }
 
-            else if (ModEntry.data.actual_hunger >= 80 || ModEntry.data.actual_thirst >= 80)
-            {
-                if (ModEntry.data.actual_hunger >= 80)
-                    CallSettingBuff(Buffs.FullnessBuffName);
+            var hungerSate = ProceedHungerCheck();
+            var thirstSate = ProceedThirstCheck();
 
-                else
-                    CallSettingBuff(Buffs.HydratedBuffName);
-
-                return true;
-            }
-
-            else
-            {
-                return false;
-            }
+            return hungerSate && thirstSate;
         }
 
-        private static void CallSettingBuff(string buffName) =>
-                            Buffs.SetBuff(buffName);
+        private static bool ProceedHungerCheck()
+        {
+            var result = true;
+            if (ModEntry.Data.ActualHunger >= 80)
+            {
+                Buffs.CallUpdateSettingBuff(Buffs.FullnessBuffName);
+            }
+            else
+            {
+                result = ModEntry.Data.ActualHunger > 30;
+                Buffs.CallUpdateSettingBuff(Buffs.FullnessBuffName, true);
+            }
+            
+            return result;
+        }
+
+        private static bool ProceedThirstCheck()
+        {
+            var result = true;
+            if (ModEntry.Data.ActualThirst >= 80)
+            {
+                Buffs.CallUpdateSettingBuff(Buffs.HydratedBuffName);
+            }
+            else
+            {
+                result = ModEntry.Data.ActualThirst > 30;
+                Buffs.CallUpdateSettingBuff(Buffs.HydratedBuffName, true);
+            }
+
+            return result;
+        }
     }
 }

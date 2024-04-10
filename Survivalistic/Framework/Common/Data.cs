@@ -4,20 +4,20 @@ namespace Survivalistic.Framework.Common
 {
     public class Data
     {
-        public float actual_hunger { get; set; } = 100;
-        public float actual_thirst { get; set; } = 100;
+        public float ActualHunger { get; set; } = 100;
+        public float ActualThirst { get; set; } = 100;
 
-        public float max_hunger { get; set; } = 100;
-        public float max_thirst { get; set; } = 100;
+        public float MaxHunger { get; set; } = 100;
+        public float MaxThirst { get; set; } = 100;
 
-        public float initial_hunger { get; set; } = 100;
-        public float initial_thirst { get; set; } = 100;
+        public float InitialHunger { get; set; } = 100;
+        public float InitialThirst { get; set; } = 100;
 
-        public int actual_day { get; set; } = 0;
-        public int actual_season { get; set; } = 0;
-        public int actual_year { get; set; } = 0;
-        public int actual_tick { get; set; } = 0;
+        public int ActualDay { get; set; } = 0;
+        public int ActualSeason { get; set; } = 0;
+        public int ActualYear { get; set; } = 0;
+        public int ActualTick { get; set; } = 0;
 
-        public static Dictionary<string, string> foodDatabase { get; set; }
+        public static Dictionary<string, string> FoodDatabase { get; set; }
     }
 }

@@ -1,29 +1,33 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using Survivalistic.Framework.APIs;
 using Survivalistic.Framework.Bars;
 using Survivalistic.Framework.Common;
 using Survivalistic.Framework.Common.Affection;
 using Survivalistic.Framework.Databases;
-using Survivalistic.Framework.Interfaces;
 using Survivalistic.Framework.Networking;
 using Survivalistic.Framework.Rendering;
+using Survivalistic.Models;
 
 namespace Survivalistic
 {
     public class ModEntry : Mod
     {
-        public static ModEntry instance;
-        internal static Data data;
-        public static Config config;
+        public static ModEntry Instance { get; private set; }
+
+        public static Data Data { get; set; }
+
+        public static Config Config { get; private set; }
 
         public override void Entry(IModHelper helper)
         {
-            instance = this;
-            config = Helper.ReadConfig<Config>();
+            Instance = this;
+            Config = Helper.ReadConfig<Config>();
 
             Textures.LoadTextures();
 
             helper.Events.GameLoop.GameLaunched += OnGameLaunch;
+            helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
             helper.Events.GameLoop.UpdateTicked += OnUpdate;
             helper.Events.GameLoop.TimeChanged += OnTimeChanged;
             helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
@@ -36,8 +40,8 @@ namespace Survivalistic
             //helper.Events.Display.RenderedActiveMenu += Renderer.OnActiveMenu;
             helper.Events.GameLoop.ReturnedToTitle += OnReturnToTitle;
 
-            helper.ConsoleCommands.Add("survivalistic_feed", "Feeds a player.\nUsage: survivalistic_feed 'player_name'", Commands.Feed);
-            helper.ConsoleCommands.Add("survivalistic_hydrate", "Hydrates a player.\nUsage: survivalistic_hydrate 'player_name'", Commands.Hydrate);
+            helper.ConsoleCommands.Add("survivalistic_feed", "Feeds a player.\nUsage: survivalistic_feed 'food_amount' 'player_name'", Commands.Feed);
+            helper.ConsoleCommands.Add("survivalistic_hydrate", "Hydrates a player.\nUsage: survivalistic_hydrate 'hydration_amount' 'player_name'", Commands.Hydrate);
             helper.ConsoleCommands.Add("survivalistic_fullness", "Set full status to a player.\nUsage: survivalistic_fullness 'player_name'", Commands.Fullness);
             helper.ConsoleCommands.Add("survivalistic_forcesync", "Forces the synchronization in multiplayer to all players.\nUsage: survivalistic_forcesync", Commands.ForceSync);
 
@@ -54,13 +58,12 @@ namespace Survivalistic
         }
 
         private void OnReturnToTitle(object sender, ReturnedToTitleEventArgs e) =>
-                     NetController.firstLoad = false;
+                     NetController._firstLoad = false;
 
         private void OnUpdate(object sender, UpdateTickedEventArgs e)
         {
             Interaction.EatingCheck();
             Interaction.UsingToolCheck();
-            BarsPosition.SetBarsPosition();
             Interaction.UpdateTickInformation();
             Penalty.VerifyPassOut();
         }
@@ -76,19 +79,19 @@ namespace Survivalistic
 
         private void OnDayStarted(object sender, DayStartedEventArgs e)
         {
-            data.actual_hunger -= config.food_decrease_after_sleep;
-            data.actual_thirst -= config.thirst_decrease_after_sleep;
+            Data.ActualHunger -= Config.FoodDecreaseAfterSleep;
+            Data.ActualThirst -= Config.ThirstDecreaseAfterSleep;
 
             OnUpdate(default, default);
         }
 
         private void OnSaveLoaded(object sender, SaveLoadedEventArgs e)
         {
-            if (!NetController.firstLoad) NetController.Sync();
+            if (!NetController._firstLoad) NetController.Sync();
             Interaction.Awake();
             NetController.Sync();
             BarsPosition.SetBarsPosition();
-            Interaction.ReceiveAwakeInfos();
+            Interaction.ReceiveAwakeInfo();
             BarsUpdate.CalculatePercentage();
             BarsWarnings.VerifyStatus();
         }
@@ -113,8 +116,8 @@ namespace Survivalistic
                 // Register mod.
                 configMenu.Register(
                     mod: ModManifest,
-                    reset: () => config = new Config(),
-                    save: () => Helper.WriteConfig(config)
+                    reset: () => Config = new Config(),
+                    save: () => Helper.WriteConfig(Config)
                 );
 
                 #region Multiplier settings.
@@ -131,8 +134,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("main-hunger-setting"),
                     tooltip: () => Helper.Translation.Get("main-hunger-setting-des"),
-                    getValue: () => config.hunger_multiplier,
-                    setValue: value => config.hunger_multiplier = value,
+                    getValue: () => Config.HungerMultiplier,
+                    setValue: value => Config.HungerMultiplier = value,
                     min: 0.0F,
                     max: 5.0F
                 );
@@ -142,8 +145,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("main-thirst-setting"),
                     tooltip: () => Helper.Translation.Get("main-thirst-setting-des"),
-                    getValue: () => config.thirst_multiplier,
-                    setValue: value => config.thirst_multiplier = value,
+                    getValue: () => Config.ThirstMultiplier,
+                    setValue: value => Config.ThirstMultiplier = value,
                     min: 0.0F,
                     max: 5.0F
                 );
@@ -153,8 +156,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("action-hunger-setting"),
                     tooltip: () => Helper.Translation.Get("action-hunger-setting-des"),
-                    getValue: () => config.hunger_action_multiplier,
-                    setValue: value => config.hunger_action_multiplier = value,
+                    getValue: () => Config.HungerActionMultiplier,
+                    setValue: value => Config.HungerActionMultiplier = value,
                     min: 0.0F,
                     max: 5.0F
                 );
@@ -164,8 +167,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("action-thirst-setting"),
                     tooltip: () => Helper.Translation.Get("action-thirst-setting-des"),
-                    getValue: () => config.thirst_action_multiplier,
-                    setValue: value => config.thirst_action_multiplier = value,
+                    getValue: () => Config.ThirstActionMultiplier,
+                    setValue: value => Config.ThirstActionMultiplier = value,
                     min: 0.0F,
                     max: 5.0F
                 );
@@ -185,8 +188,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("bars-position-variant"),
                     tooltip: () => Helper.Translation.Get("bars-position-variant-des"),
-                    getValue: () => config.bars_position,
-                    setValue: value => config.bars_position = value
+                    getValue: () => Config.BarsPosition,
+                    setValue: value => Config.BarsPosition = value
                 );
 
                 // X position setting.
@@ -194,8 +197,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("bars-position-x"),
                     tooltip: () => Helper.Translation.Get("bars-position-x-des"),
-                    getValue: () => config.bars_custom_x,
-                    setValue: value => config.bars_custom_x = value
+                    getValue: () => Config.BarsCustomX,
+                    setValue: value => Config.BarsCustomX = value
                 );
 
                 // Y position setting.
@@ -203,8 +206,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("bars-position-y"),
                     tooltip: () => Helper.Translation.Get("bars-position-y-des"),
-                    getValue: () => config.bars_custom_y,
-                    setValue: value => config.bars_custom_y = value
+                    getValue: () => Config.BarsCustomY,
+                    setValue: value => Config.BarsCustomY = value
                 );
                 #endregion
 
@@ -222,8 +225,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("non-supported-food"),
                     tooltip: () => Helper.Translation.Get("non-supported-food-des"),
-                    getValue: () => config.non_supported_food,
-                    setValue: value => config.non_supported_food = value
+                    getValue: () => Config.NonSupportedFood,
+                    setValue: value => Config.NonSupportedFood = value
                 );
                 #endregion
 
@@ -240,8 +243,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("sleep-decrease"),
                     tooltip: () => Helper.Translation.Get("sleep-decrease-des"),
-                    getValue: () => config.decrease_values_after_sleep,
-                    setValue: value => config.decrease_values_after_sleep = value
+                    getValue: () => Config.DecreaseValuesAfterSleep,
+                    setValue: value => Config.DecreaseValuesAfterSleep = value
                 );
 
                 // Hunger.
@@ -249,8 +252,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("hunger-increase-after-sleep"),
                     tooltip: () => Helper.Translation.Get("hunger-increase-after-sleep-des"),
-                    getValue: () => config.food_decrease_after_sleep,
-                    setValue: value => config.food_decrease_after_sleep = value,
+                    getValue: () => Config.FoodDecreaseAfterSleep,
+                    setValue: value => Config.FoodDecreaseAfterSleep = value,
                     min: -100,
                     max: 100
                 );
@@ -260,8 +263,8 @@ namespace Survivalistic
                     mod: ModManifest,
                     name: () => Helper.Translation.Get("thirst-increase-after-sleep"),
                     tooltip: () => Helper.Translation.Get("thirst-increase-after-sleep-des"),
-                    getValue: () => config.thirst_decrease_after_sleep,
-                    setValue: value => config.thirst_decrease_after_sleep = value,
+                    getValue: () => Config.ThirstDecreaseAfterSleep,
+                    setValue: value => Config.ThirstDecreaseAfterSleep = value,
                     min: -100,
                     max: 100
                 );

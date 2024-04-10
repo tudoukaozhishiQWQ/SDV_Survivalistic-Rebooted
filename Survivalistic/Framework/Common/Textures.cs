@@ -5,9 +5,11 @@ using Survivalistic.Framework.Bars;
 
 namespace Survivalistic.Framework.Common
 {
-    public class Textures
+    public static class Textures
     {
         public static Texture2D HungerSprite, ThirstSprite;
+
+        public static Texture2D BuffSprites;
 
         private static Texture2D _hungerFiller;
 
@@ -47,8 +49,10 @@ namespace Survivalistic.Framework.Common
 
         public static void LoadTextures()
         {
-            HungerSprite = ModEntry.instance.Helper.ModContent.Load<Texture2D>("assets/Bars/Hunger_Sprite.png");
-            ThirstSprite = ModEntry.instance.Helper.ModContent.Load<Texture2D>("assets/Bars/Thirst_Sprite.png");
+            HungerSprite = ModEntry.Instance.Helper.ModContent.Load<Texture2D>("assets/Bars/Hunger_Sprite.png");
+            ThirstSprite = ModEntry.Instance.Helper.ModContent.Load<Texture2D>("assets/Bars/Thirst_Sprite.png");
+
+            BuffSprites = ModEntry.Instance.Helper.GameContent.Load<Texture2D>("TileSheets/BuffsIcons");
 
             _hungerFiller = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
             _thirstFiller = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);

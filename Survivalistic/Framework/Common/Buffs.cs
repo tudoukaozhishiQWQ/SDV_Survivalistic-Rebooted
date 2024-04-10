@@ -1,9 +1,10 @@
 using StardewModdingAPI;
 using StardewValley;
+using System.Linq;
 
 namespace Survivalistic.Framework.Common
 {
-    public class Buffs
+    public static class Buffs
     {
         public const string FullnessBuffName = "Fullness";
 
@@ -20,87 +21,130 @@ namespace Survivalistic.Framework.Common
             switch (name)
             {
                 case FullnessBuffName:
-                    Buff fullness_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Fullness");
+                    Buff fullnessBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Fullness");
 
-                    if (fullness_buff == null)
+                    if (fullnessBuff == null || true)
                     {
-                        fullness_buff = new Buff(ModEntry.instance.Helper.Translation.Get("buff.fullness.description"), 0, "SURV_Fullness", 28)
+                        fullnessBuff = new Buff("SURV_Fullness", "SURV_Fullness",
+                                                duration: Buff.ENDLESS,
+                                                effects: new StardewValley.Buffs.BuffEffects()
+                                                {
+                                                    Defense = { 2 }
+                                                })
                         {
-                            displaySource = ModEntry.instance.Helper.Translation.Get("buff.fullness.source")
+                            description = ModEntry.Instance.Helper.Translation.Get("buff.fullness.description"),
+                            displaySource = ModEntry.Instance.Helper.Translation.Get("buff.fullness.source"),
+                            iconTexture = Textures.BuffSprites,
+                            iconSheetIndex = 28,
                         };
 
-                        Game1.buffsDisplay.addOtherBuff(fullness_buff);
+                        Game1.player.buffs.Apply(fullnessBuff);
                     }
-                    fullness_buff.millisecondsDuration = 60 * 1000;
 
                     break;
 
                 case HydratedBuffName:
-                    Buff hydrated_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Hydrated");
+                    Buff hydratedBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Hydrated");
 
-                    if (hydrated_buff == null)
+                    if (hydratedBuff == null)
                     {
-                        hydrated_buff = new Buff(ModEntry.instance.Helper.Translation.Get("buff.hydrated.description"), 0, "SURV_Hydrated", 19)
+                        hydratedBuff = new Buff("SURV_Hydrated", "SURV_Hydrated",
+                                                duration: Buff.ENDLESS,
+                                                effects: new StardewValley.Buffs.BuffEffects()
+                                                {
+                                                    MaxStamina = { 25 }
+                                                })
                         {
-                            displaySource = ModEntry.instance.Helper.Translation.Get("buff.hydrated.source")
+                            description = ModEntry.Instance.Helper.Translation.Get("buff.hydrated.description"),
+                            displaySource = ModEntry.Instance.Helper.Translation.Get("buff.hydrated.source"),
+                            iconTexture = Textures.BuffSprites,
+                            iconSheetIndex = 19,
+                            millisecondsDuration = 60 * 1000
                         };
 
-                        Game1.buffsDisplay.addOtherBuff(hydrated_buff);
+                        Game1.player.buffs.Apply(hydratedBuff);
                     }
-                    hydrated_buff.millisecondsDuration = 30 * 1000;
 
                     break;
 
                 case HungerBuffName:
-                    Buff hunger_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Hunger");
+                    Buff hungerBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Hunger");
 
-                    if (hunger_buff == null)
+                    if (hungerBuff == null)
                     {
-                        hunger_buff = new Buff(ModEntry.instance.Helper.Translation.Get("hunger-warning"), 0, "SURV_Hunger", 6)
+                        hungerBuff = new Buff("SURV_Hunger", "SURV_Hunger",
+                                                duration: Buff.ENDLESS, isDebuff: true,
+                                                effects: new StardewValley.Buffs.BuffEffects()
+                                                {
+                                                    Defense = { -2 },
+                                                    Attack = { -2 }
+                                                })
                         {
-                            displaySource = ModEntry.instance.Helper.Translation.Get("hunger-source")
+                            description = ModEntry.Instance.Helper.Translation.Get("hunger-warning"),
+                            displaySource = ModEntry.Instance.Helper.Translation.Get("hunger-source"),
+                            iconTexture = Textures.BuffSprites,
+                            iconSheetIndex = 6,
+                            millisecondsDuration = 60 * 1000
                         };
 
-                        Game1.buffsDisplay.addOtherBuff(hunger_buff);
+                        Game1.player.buffs.Apply(hungerBuff);
                     }
-                    hunger_buff.millisecondsDuration = 10 * 1000;
 
                     break;
 
                 case ThirstyBuffName:
-                    Buff thirsty_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Thirsty");
+                    Buff thirstyBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Thirsty");
 
-                    if (thirsty_buff == null)
+                    if (thirstyBuff == null)
                     {
-                        thirsty_buff = new Buff(ModEntry.instance.Helper.Translation.Get("thirsty-warning"), 0, "SURV_Thirsty", 7)
+                        thirstyBuff = new Buff("SURV_Thirsty", "SURV_Thirsty",
+                                                duration: Buff.ENDLESS, isDebuff: true,
+                                                effects: new StardewValley.Buffs.BuffEffects()
+                                                {
+                                                    MaxStamina = { -30 },
+                                                    Speed = { -1 }
+                                                })
                         {
-                            displaySource = ModEntry.instance.Helper.Translation.Get("thirsty-source")
+                            description = ModEntry.Instance.Helper.Translation.Get("thirsty-warning"),
+                            displaySource = ModEntry.Instance.Helper.Translation.Get("thirsty-source"),
+                            iconTexture = Textures.BuffSprites,
+                            iconSheetIndex = 7,
+                            millisecondsDuration = 60 * 1000
                         };
 
-                        Game1.buffsDisplay.addOtherBuff(thirsty_buff);
+                        Game1.player.buffs.Apply(thirstyBuff);
                     }
-                    thirsty_buff.millisecondsDuration = 10 * 1000;
 
                     break;
 
                 case FaintingBuffName:
-                    Buff fainting_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Fainting");
+                    Buff faintingBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Fainting");
 
-                    if (fainting_buff == null)
+                    if (faintingBuff == null)
                     {
-                        fainting_buff = new Buff(ModEntry.instance.Helper.Translation.Get("pass-out"), 0, "SURV_Fainting", 26)
+                        faintingBuff = new Buff("SURV_Fainting", "SURV_Fainting",
+                                                duration: Buff.ENDLESS,
+                                                effects: new StardewValley.Buffs.BuffEffects()
+                                                {
+                                                    Speed = { -2 },
+                                                    Attack = { -3 },
+                                                    Defense = { -3 }
+                                                })
                         {
-                            displaySource = ModEntry.instance.Helper.Translation.Get("pass-out-source")
+                            description = ModEntry.Instance.Helper.Translation.Get("pass-out"),
+                            displaySource = ModEntry.Instance.Helper.Translation.Get("pass-out-source"),
+                            iconTexture = Textures.BuffSprites,
+                            iconSheetIndex = 26,
+                            millisecondsDuration = 60 * 1000
                         };
 
-                        Game1.buffsDisplay.addOtherBuff(fainting_buff);
+                        Game1.player.buffs.Apply(faintingBuff);
                     }
-                    fainting_buff.millisecondsDuration = 10 * 1000;
 
                     break;
 
                 default:
-                    ModEntry.instance.Monitor.Log($"Unknown buff name send to 'SetBuff' function. Value: {name}.", LogLevel.Error);
+                    ModEntry.Instance.Monitor.Log($"Unknown buff name send to 'SetBuff' function. Value: {name}.", LogLevel.Error);
 
                     break;
             }
@@ -111,60 +155,37 @@ namespace Survivalistic.Framework.Common
             switch (name)
             {
                 case FullnessBuffName:
-                    Buff fullness_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Fullness");
-
-                    if (fullness_buff != null)
-                    {
-                        fullness_buff.millisecondsDuration = 0;
-                    }
-
+                    Game1.player.buffs.Remove("SURV_Fullness");
                     break;
 
                 case HydratedBuffName:
-                    Buff hydrated_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Hydrated");
-
-                    if (hydrated_buff != null)
-                    {
-                        hydrated_buff.millisecondsDuration = 0;
-                    }
-
+                    Game1.player.buffs.Remove("SURV_Hydrated");
                     break;
 
                 case HungerBuffName:
-                    Buff hunger_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Hunger");
-
-                    if (hunger_buff != null)
-                    {
-                        hunger_buff.millisecondsDuration = 0;
-                    }
-
+                    Game1.player.buffs.Remove("SURV_Hunger");
                     break;
 
                 case ThirstyBuffName:
-                    Buff thirsty_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Thirsty");
-
-                    if (thirsty_buff != null)
-                    {
-                        thirsty_buff.millisecondsDuration = 0;
-                    }
-
+                    Game1.player.buffs.Remove("SURV_Thirsty");
                     break;
 
                 case FaintingBuffName:
-                    Buff fainting_buff = Game1.buffsDisplay.otherBuffs.Find(i => i.source == "SURV_Fainting");
-
-                    if (fainting_buff != null)
-                    {
-                        fainting_buff.millisecondsDuration = 0;
-                    }
-
+                    Game1.player.buffs.Remove("SURV_Fainting");
                     break;
 
                 default:
-                    ModEntry.instance.Monitor.Log($"Unknown value send to 'RemoveBuff' function. Value: {name}.", LogLevel.Error);
-
+                    ModEntry.Instance.Monitor.Log($"Unknown value send to 'RemoveBuff' function. Value: {name}.", LogLevel.Error);
                     break;
             }
+        }
+
+        public static void CallUpdateSettingBuff(string buffName, bool remove = false)
+        {
+            if (!remove && !Game1.player.hasBuff($"SURV_{buffName}"))
+                SetBuff(buffName);
+            else if (remove && Game1.player.hasBuff($"SURV_{buffName}"))
+                RemoveBuff(buffName);
         }
     }
 }

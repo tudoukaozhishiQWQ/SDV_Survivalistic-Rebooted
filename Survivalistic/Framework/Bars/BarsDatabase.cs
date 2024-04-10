@@ -1,15 +1,15 @@
 ﻿namespace Survivalistic.Framework.Bars
 {
-    public class BarsDatabase
+    public static class BarsDatabase
     {
-        public static float hunger_velocity = ModEntry.config.hunger_multiplier;
-        public static float thirst_velocity = ModEntry.config.thirst_multiplier;
+        public static float HungerVelocity = ModEntry.Config.HungerMultiplier;
+        public static float ThirstVelocity = ModEntry.Config.ThirstMultiplier;
 
-        public static bool render_numerical_hunger = false;
-        public static bool render_numerical_thirst = false;
+        public static bool RenderNumericalHunger = false;
+        public static bool RenderNumericalThirst = false;
 
-        public static bool right_side = false;
+        public static bool RightSide = false;
 
-        public static float tool_use_multiplier = 0.25f;
+        public static float ToolUseMultiplier = 0.25f;
     }
 }

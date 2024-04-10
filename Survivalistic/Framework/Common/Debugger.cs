@@ -2,36 +2,36 @@
 
 namespace Survivalistic.Framework.Common
 {
-    public class Debugger
+    public static class Debugger
     {
-        private static IMonitor Monitor = ModEntry.instance.Monitor;
+        private static readonly IMonitor monitor = ModEntry.Instance.Monitor;
 
         public static void Log(string message, string type)
         {
             switch (type)
             {
                 case "Trace":
-                    Monitor.Log(message, LogLevel.Trace);
+                    monitor.Log(message, LogLevel.Trace);
                     break;
 
                 case "Info":
-                    Monitor.Log(message, LogLevel.Info);
+                    monitor.Log(message, LogLevel.Info);
                     break;
 
                 case "Error":
-                    Monitor.Log(message, LogLevel.Error);
+                    monitor.Log(message, LogLevel.Error);
                     break;
 
                 case "Warn":
-                    Monitor.Log(message, LogLevel.Warn);
+                    monitor.Log(message, LogLevel.Warn);
                     break;
 
                 case "Alert":
-                    Monitor.Log(message, LogLevel.Alert);
+                    monitor.Log(message, LogLevel.Alert);
                     break;
 
                 case "Debug":
-                    Monitor.Log(message, LogLevel.Debug);
+                    monitor.Log(message, LogLevel.Debug);
                     break;
             }
         }

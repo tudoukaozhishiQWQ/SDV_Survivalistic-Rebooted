@@ -1,39 +1,39 @@
-using System.Collections.Generic;
-using System.Linq;
 using StardewModdingAPI;
+using System.Linq;
 
 namespace Survivalistic.Framework.Databases
 {
-    class DBController
+    static class DBController
     {
         public static void LoadDatabases()
         {
-            EdiblesDB _actualModDatabase = ModEntry.instance.Helper.Data.ReadJsonFile<EdiblesDB>($"assets/Databases/BaseGame_edibles.json") ?? null;
+            EdiblesDB _actualModDatabase = ModEntry.Instance.Helper.Data.ReadJsonFile<EdiblesDB>("assets/Databases/BaseGame_edibles.json");
             if (_actualModDatabase != null)
             {
-                for (var i = 0; i < _actualModDatabase.edibles.Length / 2; i++)
+                for (var i = 0; i < _actualModDatabase.Edibles.Length / 2; i++)
                 {
-                    Foods.foodDatabase.Add(_actualModDatabase.edibles[i, 0], _actualModDatabase.edibles[i, 1]);
+                    Foods.FoodDatabase.Add(_actualModDatabase.Edibles[i, 0], _actualModDatabase.Edibles[i, 1]);
                 }
             }
 
-            List<IModInfo> _modList = ModEntry.instance.Helper.ModRegistry.GetAll().ToList();
-            foreach (IModInfo _mod in _modList)
+            foreach (IModInfo _mod in ModEntry.Instance.Helper.ModRegistry.GetAll().ToList())
             {
-                _actualModDatabase = ModEntry.instance.Helper.Data.ReadJsonFile<EdiblesDB>($"assets/Databases/{_mod.Manifest.UniqueID}_edibles.json") ?? null;
+                _actualModDatabase = ModEntry.Instance.Helper.Data.ReadJsonFile<EdiblesDB>($"assets/Databases/{_mod.Manifest.UniqueID}_edibles.json");
                 if (_actualModDatabase != null)
                 {
-                    for (var i = 0; i < _actualModDatabase.edibles.Length / 2; i++)
+                    for (var i = 0; i < _actualModDatabase.Edibles.Length / 2; i++)
                     {
-                        try {
-                            Foods.foodDatabase.Add(_actualModDatabase.edibles[i, 0], _actualModDatabase.edibles[i, 1]);
-                        } catch (System.ArgumentException exception)
-						{
-                            ModEntry.instance.Monitor.Log(_mod.Manifest.UniqueID + "_edibles Attempted to add duplicate entry to EdiblesDB", LogLevel.Trace);
-                            ModEntry.instance.Monitor.Log(exception.Message, LogLevel.Trace);
-                            ModEntry.instance.Monitor.Log(exception.StackTrace, LogLevel.Trace);
-						}
-                        
+                        try
+                        {
+                            Foods.FoodDatabase.Add(_actualModDatabase.Edibles[i, 0], _actualModDatabase.Edibles[i, 1]);
+                        }
+                        catch (System.ArgumentException exception)
+                        {
+                            ModEntry.Instance.Monitor.Log(_mod.Manifest.UniqueID + "_edibles Attempted to add duplicate entry to EdiblesDB", LogLevel.Trace);
+                            ModEntry.Instance.Monitor.Log(exception.Message, LogLevel.Trace);
+                            ModEntry.Instance.Monitor.Log(exception.StackTrace, LogLevel.Trace);
+                        }
+
                     }
                 }
             }
