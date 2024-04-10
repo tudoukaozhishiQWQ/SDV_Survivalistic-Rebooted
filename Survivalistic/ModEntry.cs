@@ -1,15 +1,15 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using Survivalistic.Framework.APIs;
-using Survivalistic.Framework.Bars;
-using Survivalistic.Framework.Common;
-using Survivalistic.Framework.Common.Affection;
-using Survivalistic.Framework.Databases;
-using Survivalistic.Framework.Networking;
-using Survivalistic.Framework.Rendering;
-using Survivalistic.Models;
+using Survivalistic_Rebooted.Framework.APIs;
+using Survivalistic_Rebooted.Framework.Bars;
+using Survivalistic_Rebooted.Framework.Common;
+using Survivalistic_Rebooted.Framework.Common.Affection;
+using Survivalistic_Rebooted.Framework.Databases;
+using Survivalistic_Rebooted.Framework.Networking;
+using Survivalistic_Rebooted.Framework.Rendering;
+using Survivalistic_Rebooted.Models;
 
-namespace Survivalistic
+namespace Survivalistic_Rebooted
 {
     public class ModEntry : Mod
     {
@@ -73,7 +73,10 @@ namespace Survivalistic
             BarsUpdate.UpdateBarsInformation();
             BarsUpdate.CalculatePercentage();
             BarsWarnings.VerifyStatus();
-            Penalty.VerifyPenalty();
+
+            if (!Benefits.VerifyBenefits())
+                Penalty.VerifyPenalty();
+
             NetController.Sync();
         }
 

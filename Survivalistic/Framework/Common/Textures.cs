@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
-using Survivalistic.Framework.Bars;
+using Survivalistic_Rebooted.Framework.Bars;
 
-namespace Survivalistic.Framework.Common
+namespace Survivalistic_Rebooted.Framework.Common
 {
     public static class Textures
     {

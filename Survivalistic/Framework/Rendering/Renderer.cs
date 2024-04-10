@@ -3,15 +3,15 @@ using StardewModdingAPI.Events;
 using StardewValley;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Survivalistic.Framework.Bars;
-using Survivalistic.Framework.Common;
+using Survivalistic_Rebooted.Framework.Bars;
+using Survivalistic_Rebooted.Framework.Common;
 using System;
 using StardewValley.Menus;
-using Survivalistic.Framework.Databases;
+using Survivalistic_Rebooted.Framework.Databases;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Survivalistic.Framework.Rendering
+namespace Survivalistic_Rebooted.Framework.Rendering
 {
     public static class Renderer
     {
@@ -30,18 +30,18 @@ namespace Survivalistic.Framework.Rendering
             if (BarsDatabase.RenderNumericalHunger)
             {
                 string information = $"{(int)ModEntry.Data.ActualHunger}/{(int)ModEntry.Data.MaxHunger}";
-                Vector2 text_size = Game1.dialogueFont.MeasureString(information);
-                Vector2 text_position;
-                if (BarsDatabase.RightSide) text_position = new Vector2(-12, text_size.X);
-                else text_position = new Vector2(12 + (Textures.HungerSprite.Width * 4), 0);
+                Vector2 textSize = Game1.dialogueFont.MeasureString(information);
+                Vector2 textPosition;
+                if (BarsDatabase.RightSide) textPosition = new Vector2(-12, textSize.X);
+                else textPosition = new Vector2(12 + (Textures.HungerSprite.Width * 4), 0);
 
                 Game1.spriteBatch.DrawString(
                     Game1.dialogueFont,
                     information,
-                    new Vector2(BarsPosition.barPosition.X + text_position.X, BarsPosition.barPosition.Y - 240 + ((Textures.HungerSprite.Height * 4) / 4) + 8),
+                    new Vector2(BarsPosition.barPosition.X + textPosition.X, BarsPosition.barPosition.Y - 240 + ((Textures.HungerSprite.Height * 4) / 4) + 8),
                     BarsInformations.GetOffsetHungerColor(),
                     0f,
-                    new Vector2(text_position.Y, 0),
+                    new Vector2(textPosition.Y, 0),
                     1,
                     SpriteEffects.None,
                     0f);

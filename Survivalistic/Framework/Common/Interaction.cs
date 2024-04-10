@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using StardewModdingAPI;
 using StardewValley;
-using Survivalistic.Framework.Bars;
-using Survivalistic.Framework.Common.Affection;
-using Survivalistic.Framework.Databases;
+using Survivalistic_Rebooted.Framework.Bars;
+using Survivalistic_Rebooted.Framework.Common.Affection;
+using Survivalistic_Rebooted.Framework.Databases;
 
-namespace Survivalistic.Framework.Common
+namespace Survivalistic_Rebooted.Framework.Common
 {
     public static class Interaction
     {
@@ -64,12 +64,12 @@ namespace Survivalistic.Framework.Common
             float lastHunger = ModEntry.Data.ActualHunger;
             float lastThirst = ModEntry.Data.ActualThirst;
 
-            if (Foods.FoodDatabase.TryGetValue(foodEaten, out string food_status_string))
+            if (Foods.FoodDatabase.TryGetValue(foodEaten, out string foodStatusString))
             {
-                List<string> food_status = food_status_string.Split('/').ToList();
+                List<string> foodStatus = foodStatusString.Split('/').ToList();
 
-                if (ModEntry.Data.ActualHunger < ModEntry.Data.MaxHunger) ModEntry.Data.ActualHunger += Int32.Parse(food_status[0]);
-                if (ModEntry.Data.ActualThirst < ModEntry.Data.MaxThirst) ModEntry.Data.ActualThirst += Int32.Parse(food_status[1]);
+                if (ModEntry.Data.ActualHunger < ModEntry.Data.MaxHunger) ModEntry.Data.ActualHunger += Int32.Parse(foodStatus[0]);
+                if (ModEntry.Data.ActualThirst < ModEntry.Data.MaxThirst) ModEntry.Data.ActualThirst += Int32.Parse(foodStatus[1]);
 
                 BarsInformations.NormalizeStatus();
 
@@ -87,20 +87,20 @@ namespace Survivalistic.Framework.Common
 
                 BarsInformations.NormalizeStatus();
 
-                float hunger_diff = ModEntry.Data.ActualHunger - lastHunger;
-                float thirst_diff = ModEntry.Data.ActualThirst - lastThirst;
+                float hungerDiff = ModEntry.Data.ActualHunger - lastHunger;
+                float thirstDiff = ModEntry.Data.ActualThirst - lastThirst;
 
-                if (hunger_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-fullness"), (int)hunger_diff), 4));
-                if (thirst_diff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-thirsty"), (int)thirst_diff), 4));
+                if (hungerDiff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-fullness"), (int)hungerDiff), 4));
+                if (thirstDiff > 0) Game1.addHUDMessage(new HUDMessage(string.Format(ModEntry.Instance.Helper.Translation.Get("info-thirsty"), (int)thirstDiff), 4));
             }
 
             if (!Benefits.VerifyBenefits())
                 Penalty.VerifyPenalty();
         }
 
-        private static void DecreaseStatus(string tool_used)
+        private static void DecreaseStatus(string toolUsed)
         {
-            if (Tools.GetToolDatabase().TryGetValue(tool_used, out string toolStatusString))
+            if (Tools.GetToolDatabase().TryGetValue(toolUsed, out string toolStatusString))
             {
                 List<string> toolStatus = toolStatusString.Split('/').ToList();
 

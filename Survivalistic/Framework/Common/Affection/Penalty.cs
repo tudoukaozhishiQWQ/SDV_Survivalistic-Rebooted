@@ -1,9 +1,9 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
-using Survivalistic.Framework.Bars;
-using Survivalistic.Framework.Networking;
+using Survivalistic_Rebooted.Framework.Bars;
+using Survivalistic_Rebooted.Framework.Networking;
 
-namespace Survivalistic.Framework.Common.Affection
+namespace Survivalistic_Rebooted.Framework.Common.Affection
 {
     public static class Penalty
     {
@@ -96,7 +96,10 @@ namespace Survivalistic.Framework.Common.Affection
                     _alreadyCheckedFaint = true;
                 }
             }
-            else _alreadyCheckedFaint = false;
+            else
+            {
+                _alreadyCheckedFaint = false;
+            }
         }
     }
 }

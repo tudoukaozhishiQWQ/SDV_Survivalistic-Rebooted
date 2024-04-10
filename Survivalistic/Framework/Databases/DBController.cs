@@ -1,7 +1,7 @@
 using StardewModdingAPI;
 using System.Linq;
 
-namespace Survivalistic.Framework.Databases
+namespace Survivalistic_Rebooted.Framework.Databases
 {
     static class DBController
     {

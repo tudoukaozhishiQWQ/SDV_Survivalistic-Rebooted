@@ -2,7 +2,7 @@
 using StardewModdingAPI;
 using Microsoft.Xna.Framework;
 
-namespace Survivalistic.Framework.Bars
+namespace Survivalistic_Rebooted.Framework.Bars
 {
     public static class BarsPosition
     {

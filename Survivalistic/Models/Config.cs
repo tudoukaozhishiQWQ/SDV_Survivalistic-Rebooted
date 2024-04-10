@@ -1,4 +1,4 @@
-﻿namespace Survivalistic.Models
+﻿namespace Survivalistic_Rebooted.Models
 {
     public class Config
     {

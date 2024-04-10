@@ -4,7 +4,7 @@ using StardewModdingAPI;
 using StardewModdingAPI.Utilities;
 using StardewValley;
 
-namespace Survivalistic.Framework.APIs
+namespace Survivalistic_Rebooted.Framework.APIs
 {
     /// <summary>The API which lets other mods add a Config UI through Generic Mod Config Menu.</summary>
     public interface IGenericModConfigMenuApi

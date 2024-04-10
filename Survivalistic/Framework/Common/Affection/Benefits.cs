@@ -1,6 +1,6 @@
 ﻿using StardewModdingAPI;
 
-namespace Survivalistic.Framework.Common.Affection
+namespace Survivalistic_Rebooted.Framework.Common.Affection
 {
     public static class Benefits
     {
