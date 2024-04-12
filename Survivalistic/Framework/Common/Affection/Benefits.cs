@@ -1,4 +1,5 @@
 ﻿using StardewModdingAPI;
+using Survivalistic_Rebooted.Framework.Common.Effects;
 
 namespace Survivalistic_Rebooted.Framework.Common.Affection
 {
@@ -20,12 +21,12 @@ namespace Survivalistic_Rebooted.Framework.Common.Affection
             var result = true;
             if (ModEntry.Data.ActualHunger >= 80)
             {
-                Buffs.CallUpdateSettingBuff(Buffs.FullnessBuffName);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.FullnessBuff));
             }
             else
             {
                 result = ModEntry.Data.ActualHunger > 30;
-                Buffs.CallUpdateSettingBuff(Buffs.FullnessBuffName, true);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.FullnessBuff), true);
             }
             
             return result;
@@ -36,12 +37,12 @@ namespace Survivalistic_Rebooted.Framework.Common.Affection
             var result = true;
             if (ModEntry.Data.ActualThirst >= 80)
             {
-                Buffs.CallUpdateSettingBuff(Buffs.HydratedBuffName);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.HydratedBuff));
             }
             else
             {
                 result = ModEntry.Data.ActualThirst > 30;
-                Buffs.CallUpdateSettingBuff(Buffs.HydratedBuffName, true);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.HydratedBuff), true);
             }
 
             return result;

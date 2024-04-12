@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using Survivalistic_Rebooted.Framework.Bars;
+using Survivalistic_Rebooted.Framework.Common.Effects;
 using Survivalistic_Rebooted.Framework.Networking;
 
 namespace Survivalistic_Rebooted.Framework.Common.Affection
@@ -41,11 +42,11 @@ namespace Survivalistic_Rebooted.Framework.Common.Affection
                     applyingHealthDamage = true;
                 }
 
-                Buffs.CallUpdateSettingBuff(Buffs.HungerBuffName);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.HungerDeBuff));
             }
             else
             {
-                Buffs.CallUpdateSettingBuff(Buffs.HungerBuffName, true);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.HungerDeBuff), true);
             }
 
             if (ModEntry.Data.ActualThirst <= 10)
@@ -63,22 +64,22 @@ namespace Survivalistic_Rebooted.Framework.Common.Affection
                     }
                 }
 
-                Buffs.CallUpdateSettingBuff(Buffs.ThirstyBuffName);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.ThirstDeBuff));
             }
             else
             {
-                Buffs.CallUpdateSettingBuff(Buffs.ThirstyBuffName, true);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.ThirstDeBuff), true);
             }
 
 
             if (applyingHealthDamage)
             {
                 Game1.player.checkForExhaustion(Game1.player.Stamina);
-                Buffs.CallUpdateSettingBuff(Buffs.FaintingBuffName);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.FaintDeBuff));
             }
             else
             {
-                Buffs.CallUpdateSettingBuff(Buffs.FaintingBuffName, true);
+                Buffs.CallUpdateSettingBuff(BuffsHelper.GetBuffIDByCode(Models.SurvivalisticBuffs.Codes.FaintDeBuff), true);
             }
         }
 

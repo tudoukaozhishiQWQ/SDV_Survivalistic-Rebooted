@@ -7,10 +7,10 @@ namespace Survivalistic_Rebooted.Framework.Common
 {
     public static class Commands
     {
-        private static string _errorPermission = "You aren't the host!";
-        private static string _errorPlayerIsNotFound = "Player not found!";
-        private static string _errorCommandIsWrong = "Command missing arguments!\nPlease check the command usage with:";
-        private static string _errorMultiplayer = "That command only works on multiplayer!";
+        private const string _errorPermission = "You aren't the host!";
+        private const string _errorPlayerIsNotFound = "Player not found!";
+        private const string _errorCommandIsWrong = "Command missing arguments!\nPlease check the command usage with:";
+        private const string _errorMultiplayer = "That command only works on multiplayer!";
 
         public static void Feed(string command, string[] args)
         {
