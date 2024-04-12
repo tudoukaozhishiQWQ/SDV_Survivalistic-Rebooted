@@ -57,8 +57,10 @@ namespace Survivalistic_Rebooted
             Monitor.Log(message, LogLevel.Info);
         }
 
-        private void OnReturnToTitle(object sender, ReturnedToTitleEventArgs e) =>
-                     NetController._firstLoad = false;
+        private void OnReturnToTitle(object sender, ReturnedToTitleEventArgs e)
+        {
+            NetController._firstLoad = false;
+        }
 
         private void OnUpdate(object sender, UpdateTickedEventArgs e)
         {

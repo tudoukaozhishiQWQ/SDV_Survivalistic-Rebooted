@@ -58,8 +58,7 @@ namespace Survivalistic_Rebooted.Framework.Common
                             description = ModEntry.Instance.Helper.Translation.Get("buff.hydrated.description"),
                             displaySource = ModEntry.Instance.Helper.Translation.Get("buff.hydrated.source"),
                             iconTexture = Textures.BuffSprites,
-                            iconSheetIndex = 19,
-                            millisecondsDuration = 60 * 1000
+                            iconSheetIndex = 19
                         };
 
                         Game1.player.buffs.Apply(hydratedBuff);
@@ -83,8 +82,7 @@ namespace Survivalistic_Rebooted.Framework.Common
                             description = ModEntry.Instance.Helper.Translation.Get("hunger-warning"),
                             displaySource = ModEntry.Instance.Helper.Translation.Get("hunger-source"),
                             iconTexture = Textures.BuffSprites,
-                            iconSheetIndex = 6,
-                            millisecondsDuration = 60 * 1000
+                            iconSheetIndex = 6
                         };
 
                         Game1.player.buffs.Apply(hungerBuff);
@@ -108,8 +106,7 @@ namespace Survivalistic_Rebooted.Framework.Common
                             description = ModEntry.Instance.Helper.Translation.Get("thirsty-warning"),
                             displaySource = ModEntry.Instance.Helper.Translation.Get("thirsty-source"),
                             iconTexture = Textures.BuffSprites,
-                            iconSheetIndex = 7,
-                            millisecondsDuration = 60 * 1000
+                            iconSheetIndex = 7
                         };
 
                         Game1.player.buffs.Apply(thirstyBuff);
@@ -134,8 +131,7 @@ namespace Survivalistic_Rebooted.Framework.Common
                             description = ModEntry.Instance.Helper.Translation.Get("pass-out"),
                             displaySource = ModEntry.Instance.Helper.Translation.Get("pass-out-source"),
                             iconTexture = Textures.BuffSprites,
-                            iconSheetIndex = 26,
-                            millisecondsDuration = 60 * 1000
+                            iconSheetIndex = 26
                         };
 
                         Game1.player.buffs.Apply(faintingBuff);
