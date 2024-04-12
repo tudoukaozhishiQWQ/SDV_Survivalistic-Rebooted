@@ -22,8 +22,7 @@ namespace Survivalistic_Rebooted.Framework.Common
             {
                 case FullnessBuffName:
                     Buff fullnessBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Fullness");
-
-                    if (fullnessBuff == null || true)
+                    if (fullnessBuff == null)
                     {
                         fullnessBuff = new Buff("SURV_Fullness", "SURV_Fullness",
                                                 duration: Buff.ENDLESS,
@@ -45,7 +44,6 @@ namespace Survivalistic_Rebooted.Framework.Common
 
                 case HydratedBuffName:
                     Buff hydratedBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Hydrated");
-
                     if (hydratedBuff == null)
                     {
                         hydratedBuff = new Buff("SURV_Hydrated", "SURV_Hydrated",
@@ -68,7 +66,6 @@ namespace Survivalistic_Rebooted.Framework.Common
 
                 case HungerBuffName:
                     Buff hungerBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Hunger");
-
                     if (hungerBuff == null)
                     {
                         hungerBuff = new Buff("SURV_Hunger", "SURV_Hunger",
@@ -92,7 +89,6 @@ namespace Survivalistic_Rebooted.Framework.Common
 
                 case ThirstyBuffName:
                     Buff thirstyBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Thirsty");
-
                     if (thirstyBuff == null)
                     {
                         thirstyBuff = new Buff("SURV_Thirsty", "SURV_Thirsty",
@@ -116,7 +112,6 @@ namespace Survivalistic_Rebooted.Framework.Common
 
                 case FaintingBuffName:
                     Buff faintingBuff = Game1.player.buffs.AppliedBuffs.Values.FirstOrDefault(i => i.source == "SURV_Fainting");
-
                     if (faintingBuff == null)
                     {
                         faintingBuff = new Buff("SURV_Fainting", "SURV_Fainting",
@@ -141,7 +136,6 @@ namespace Survivalistic_Rebooted.Framework.Common
 
                 default:
                     ModEntry.Instance.Monitor.Log($"Unknown buff name send to 'SetBuff' function. Value: {name}.", LogLevel.Error);
-
                     break;
             }
         }
