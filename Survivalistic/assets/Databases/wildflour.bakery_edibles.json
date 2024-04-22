@@ -1,5 +1,6 @@
 {
   "edibles": [
+    //马卡龙
     [
       "wildflour.bakery_almond_macaron",
       "30/0"
@@ -40,6 +41,7 @@
       "wildflour.bakery_strawberry_macaron",
       "30/0"
     ],
+    //花色小蛋糕
     [
       "wildflour.bakery_almond_petit_fours",
       "30/0"
@@ -84,6 +86,7 @@
       "wildflour.bakery_vanilla_petit_fours",
       "35/0"
     ],
+    //玛芬
     [
       "wildflour.bakery_apple_muffin",
       "30/0"
@@ -112,6 +115,7 @@
       "wildflour.bakery_strawberry_muffin",
       "30/0"
     ],
+    //老式派
     [
       "wildflour.bakery_apple_pie",
       "40/0"
@@ -152,6 +156,7 @@
       "wildflour.bakery_sweet_potato_pie",
       "40/0"
     ],
+    //布丁
     [
       "wildflour.bakery_banana_pudding",
       "30/15"
@@ -192,6 +197,7 @@
       "wildflour.bakery_tropical_pudding",
       "30/15"
     ],
+    //司康
     [
       "wildflour.bakery_blackberry_scone",
       "35/0"
@@ -224,6 +230,7 @@
       "wildflour.bakery_strawberry_scone",
       "35/0"
     ],
+    //芝士蛋糕
     [
       "wildflour.bakery_blueberry_cheesecake",
       "40/0"
@@ -272,6 +279,7 @@
       "wildflour.bakery_white_cheesecake",
       "40/0"
     ],
+    //挞
     [
       "wildflour.bakery_blueberry_tart",
       "45/0"
@@ -312,6 +320,7 @@
       "wildflour.bakery_summer_tart",
       "45/0"
     ],
+    //面包
     [
       "wildflour.bakery_bread_loaf",
       "40/0"
@@ -344,6 +353,7 @@
       "wildflour.bakery_wheat_bread",
       "40/0"
     ],
+    //饼干
     [
       "wildflour.bakery_cherry_cookie",
       "30/0"
@@ -356,6 +366,19 @@
       "wildflour.bakery_chocolate_sandwich_cookie",
       "30/0"
     ],
+    [
+      "wildflour.bakery_orange_cookies",
+      "30/0"
+    ],
+    [
+      "wildflour.bakery_strawberry_cookie",
+      "30/0"
+    ],
+    [
+      "wildflour.bakery_vanilla_sandwich_cookies",
+      "30/0"
+    ],
+    //布朗尼
     [
       "wildflour.bakery_cream_cheese_brownies",
       "45/0"
@@ -372,25 +395,10 @@
       "wildflour.bakery_nut_brownies",
       "45/0"
     ],
-    [
-      "wildflour.bakery_orange_cookies",
-      "30/0"
-    ],
-    [
-      "wildflour.bakery_strawberry_cookie",
-      "30/0"
-    ],
-    [
-      "wildflour.bakery_vanilla_sandwich_cookies",
-      "30/0"
-    ],
+    //甜甜圈
     [
       "wildflour.bakery_chocolate_doughnut",
       "40/0"
-    ],
-    [
-      "wildflour.bakery_chocolate_eclair",
-      "30/0"
     ],
     [
       "wildflour.bakery_cream_chocolate_doughnut",
@@ -399,6 +407,23 @@
     [
       "wildflour.bakery_cream_strawberry_doughnut",
       "45/0"
+    ],
+    [
+      "wildflour.bakery_strawberry_doughnut",
+      "40/0"
+    ],
+    [
+      "wildflour.bakery_vanilla_doughnut",
+      "40/0"
+    ],
+    [
+      "wildflour.bakery_vanilla_jelly_doughnut",
+      "45/0"
+    ],
+    //闪电泡芙
+    [
+      "wildflour.bakery_chocolate_eclair",
+      "30/0"
     ],
     [
       "wildflour.bakery_maple_eclair",
@@ -417,24 +442,70 @@
       "30/0"
     ],
     [
-      "wildflour.bakery_strawberry_doughnut",
-      "40/0"
-    ],
-    [
       "wildflour.bakery_strawberry_eclair",
       "30/0"
-    ],
-    [
-      "wildflour.bakery_vanilla_doughnut",
-      "40/0"
     ],
     [
       "wildflour.bakery_vanilla_eclair",
       "30/0"
     ],
+    //蛋糕
     [
-      "wildflour.bakery_vanilla_jelly_doughnut",
-      "45/0"
+      "wildflour.bakery_carrot_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_chocolate_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_coconut_almond_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_confetti_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_gingerbread_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_lemon_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_peach_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_pineapple_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_pumpkin_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_red_velvet_cake",
+      "55/0"
+    ],
+    [
+      "wildflour.bakery_strawberry_cake",
+      "55/0"
+    ],
+    //杯子蛋糕
+    [
+      "wildflour.bakery_chocolate_raspberry_cupcake",
+      "35/0"
+    ],
+    [
+      "wildflour.bakery_strawberry_cupcake",
+      "35/0"
+    ],
+    [
+      "wwildflour.bakery_vanilla_cupcake",
+      "35/0"
     ]
   ]
 }

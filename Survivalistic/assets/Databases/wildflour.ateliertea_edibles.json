@@ -1,5 +1,6 @@
 {
   "edibles": [
+    ///水果茶
     [
       "wildflour.ateliertea_apple_tea",
       "0/80"
@@ -76,6 +77,7 @@
       "wildflour.ateliertea_strawberry_tea",
       "0/80"
     ],
+    ///水果康普茶
     [
       "wildflour.ateliertea_apple_kombucha",
       "0/75"

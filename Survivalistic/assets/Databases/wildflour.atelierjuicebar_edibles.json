@@ -1,9 +1,11 @@
 {
   "edibles": [
+    ///珍珠
     [
       "wildflour.atelierjuicebar_boba_pearls",
       "5/0"
     ],
+    ///珍珠奶茶
     [
       "wildflour.atelierjuicebar_banana_boba",
       "5/60"
@@ -76,6 +78,7 @@
       "wildflour.atelierjuicebar_vanilla_boba",
       "5/60"
     ],
+    ///果汁
     [
       "wildflour.atelierjuicebar_apple_juice",
       "0/75"
@@ -156,6 +159,7 @@
       "wildflour.atelierjuicebar_pomegranate_elixir",
       "0/75"
     ],
+    ///柠檬水
     [
       "wildflour.atelierjuicebar_blackberry_lemonade",
       "0/80"
@@ -212,6 +216,7 @@
       "wildflour.atelierjuicebar_raspberry_lemonade",
       "0/80"
     ],
+    ///水果冰沙
     [
       "wildflour.atelierjuicebar_ancient_smoothie",
       "0/85"
@@ -248,6 +253,7 @@
       "wildflour.atelierjuicebar_tropical_smoothie",
       "0/85"
     ],
+    ///冰茶
     [
       "wildflour.atelierjuicebar_iced_tea",
       "0/85"

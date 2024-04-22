@@ -1,5 +1,6 @@
 {
   "edibles": [
+    ///棉花软糖（小方块）
     [
       "wildflour.ateliercandy_ancient_marshmallow",
       "15/0"
@@ -28,6 +29,7 @@
       "wildflour.ateliercandy_strawberry_marshmallow",
       "15/0"
     ],
+    ///棉花软糖串
     [
       "wildflour.ateliercandy_ancient_mallow_pop",
       "30/0"
@@ -52,6 +54,7 @@
       "wildflour.ateliercandy_peach_mallow_pop",
       "30/0"
     ],
+    ///棒棒糖
     [
       "wildflour.ateliercandy_blueberry_lollipop",
       "10/0"
@@ -84,6 +87,7 @@
       "wildflour.ateliercandy_raspberry_lollipop",
       "10/0"
     ],
+    ///超大个棒棒糖
     [
       "wildflour.ateliercandy_blueberry_gourmet_pop",
       "25/0"
@@ -104,6 +108,7 @@
       "wildflour.ateliercandy_shortcake_gourmet_pop",
       "25/0"
     ],
+    ///水果硬糖
     [
       "wildflour.ateliercandy_cinnamon_candy",
       "15/0"
@@ -132,6 +137,7 @@
       "wildflour.ateliercandy_melon_candy",
       "15/0"
     ],
+    ///棉花糖（云状）
     [
       "wildflour.ateliercandy_classic_fairyfloss",
       "15/0"
@@ -160,6 +166,7 @@
       "wildflour.ateliercandy_vanilla_fairyfloss",
       "15/0"
     ],
+    ///水晶糖棒
     [
       "wildflour.ateliercandy_amethyst_rock_candy",
       "20/0"

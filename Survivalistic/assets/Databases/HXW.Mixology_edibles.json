@@ -1,5 +1,6 @@
 {
   "edibles": [
+    ///原浆
     [
       "HXW.Mixology_cranberry_juice",
       "0/30"
@@ -72,6 +73,7 @@
       "HXW.Mixology_tonic_water",
       "0/80"
     ],
+    ///鸡尾酒
     [
       "HXW.Mixology_berry_mimosa",
       "0/60"
@@ -168,6 +170,7 @@
       "HXW.Mixology_young_love",
       "0/60"
     ],
+    ///鸡尾酒（无酒精）
     [
       "HXW.Mixology_apple_ginger_fizz",
       "0/70"

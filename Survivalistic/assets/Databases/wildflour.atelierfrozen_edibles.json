@@ -1,5 +1,6 @@
 {
   "edibles": [
+    ///甜筒
     [
       "wildflour.atelierfrozen_ancient_cone",
       "35/30"
@@ -64,6 +65,7 @@
       "wildflour.atelierfrozen_vanilla_cone",
       "35/30"
     ],
+    ///冰棍
     [
       "wildflour.atelierfrozen_ancient_popsicle",
       "5/60"
@@ -128,6 +130,7 @@
       "wildflour.atelierfrozen_wildberry_popsicle",
       "5/60"
     ],
+    ///冻酸奶
     [
       "wildflour.atelierfrozen_cake_froyo",
       "30/35"
@@ -184,6 +187,7 @@
       "wildflour.atelierfrozen_wildberry_froyo",
       "30/35"
     ],
+    ///奶昔
     [
       "wildflour.atelierfrozen_choco_milkshake",
       "25/55"
@@ -220,6 +224,7 @@
       "wildflour.atelierfrozen_vanilla_milkshake",
       "25/55"
     ],
+    ///雪糕三明治
     [
       "wildflour.atelierfrozen_cinnamon_chocolate_sandwich",
       "40/25"

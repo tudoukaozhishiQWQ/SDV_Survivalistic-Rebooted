@@ -1,5 +1,6 @@
 {
   "edibles": [
+    ///啤酒
     [
       "wildflour.alesxmeads_ancient_ale",
       "0/65"
@@ -184,6 +185,7 @@
       "wildflour.alesxmeads_pomelo_ale",
       "0/65"
     ],
+    ///蜂蜜酒
     [
       "wildflour.alesxmeads_ancient_mead",
       "0/70"
